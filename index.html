@@ -10,9 +10,14 @@
 
 (function (cjs, an) {
 
-var p;
+var p; // shortcut to reference prototypes
 var lib={};var ss={};var img={};
 lib.ssMetadata = [];
+
+
+// symbols:
+
+
 
 (lib.Path = function() {
 	this.initialize(img.Path);
@@ -23,7 +28,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,381,381);
 (lib.sunsettrans2018logo = function() {
 	this.initialize(img.sunsettrans2018logo);
 }).prototype = p = new cjs.Bitmap();
-p.nominalBounds = new cjs.Rectangle(0,0,661,277);
+p.nominalBounds = new cjs.Rectangle(0,0,661,277);// helper functions:
 
 function mc_symbol_clone() {
 	var clone = this._cloneProps(new this.constructor(this.mode, this.startPosition, this.loop));
@@ -711,6 +716,8 @@ function getMCSymbolPrototype(symbol, nominalBounds, frameBounds) {
 	this.instance = new lib.SUN();
 	this.instance.parent = this;
 	this.instance.setTransform(190.5,190.5,1,1,0,0,0,190.5,190.5);
+	this.instance.filters = [new cjs.ColorFilter(0, 0, 0, 1, 255, 255, 255, 0)];
+	this.instance.cache(-2,-2,385,385);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance).wait(282));
 
@@ -834,7 +841,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,381,381);
 	this.instance_11.setTransform(154.5,-24.7,1,0.862,0,0,0,162.5,0);
 	this.instance_11._off = true;
 
-	this.timeline.addTween(cjs.Tween.get(this.instance_11).wait(126).to({_off:false},0).to({scaleY:8.62,y:0},12,cjs.Ease.circInOut).wait(312).to({scaleY:8.96,x:150,y:-10.9},0).wait(1));
+	this.timeline.addTween(cjs.Tween.get(this.instance_11).wait(126).to({_off:false},0).to({scaleY:8.62,y:0},12,cjs.Ease.circInOut).wait(218).to({scaleY:8.96,x:150,y:-10.9},0).to({_off:true},1).wait(94));
 
 	// learn
 	this.instance_12 = new lib.learn();
@@ -984,6 +991,7 @@ function handleFileLoad(evt, comp) {
 	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }
 }
 function handleComplete(evt,comp) {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
 	var lib=comp.getLibrary();
 	var ss=comp.getSpriteSheet();
 	var queue = evt.target;
@@ -993,11 +1001,13 @@ function handleComplete(evt,comp) {
 	}
 	exportRoot = new lib.workfile();
 	stage = new lib.Stage(canvas);
+	//Registers the "tick" event listener.
 	fnStartAnimation = function() {
 		stage.addChild(exportRoot);
 		createjs.Ticker.setFPS(lib.properties.fps);
 		createjs.Ticker.addEventListener("tick", stage);
 	}
+	//Code to support hidpi screens and responsive scaling.
 	function makeResponsive(isResp, respDim, isScale, scaleType) {
 		var lastW, lastH, lastS=1;
 		window.addEventListener('resize', resizeCanvas);
@@ -1033,7 +1043,7 @@ function handleComplete(evt,comp) {
 			stage.tickOnUpdate = true;
 		}
 	}
-	makeResponsive(true,'both',true,1);
+	makeResponsive(false,'both',false,1);
 	AdobeAn.compositionLoaded(lib.properties.id);
 	fnStartAnimation();
 }
